@@ -69,7 +69,7 @@ export default class CustomHeaderLinks extends Component {
             }}
           >
             <a
-              title={{link.anchorAttributes.title}}
+              {{!-- title={{link.anchorAttributes.title}} --}}
               href={{link.anchorAttributes.href}}
               target={{link.anchorAttributes.target}}
             >

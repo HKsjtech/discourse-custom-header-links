@@ -1,4 +1,5 @@
 import Component from "@glimmer/component";
+import { service } from "@ember/service";
 import { dasherize } from "@ember/string";
 import concatClass from "discourse/helpers/concat-class";
 import I18n from "I18n";
@@ -7,9 +8,42 @@ function normalizeLocale(locale) {
   return locale?.trim().toLowerCase().replace(/[-_]/g, "_");
 }
 
+function pathnameOf(value) {
+  try {
+    const path = new URL(value, window.location.origin).pathname;
+    if (path.length > 1 && path.endsWith("/")) {
+      return path.slice(0, -1);
+    }
+    return path || "/";
+  } catch {
+    return "";
+  }
+}
+
 export default class CustomHeaderLinks extends Component {
+  @service router;
+
   get shouldShow() {
     return settings.custom_header_links?.length > 0;
+  }
+
+  isCurrent(href) {
+    const linkPath = pathnameOf(href);
+    const currentPath = pathnameOf(this.router.currentURL || "/");
+
+    if (!linkPath || !currentPath) {
+      return false;
+    }
+
+    if (linkPath.startsWith("/c/")) {
+      return currentPath === linkPath || currentPath.startsWith(`${linkPath}/`);
+    }
+
+    if (linkPath === "/latest" || linkPath === "/") {
+      return currentPath === "/latest" || currentPath === "/";
+    }
+
+    return currentPath === linkPath;
   }
 
   get links() {
@@ -46,6 +80,7 @@ export default class CustomHeaderLinks extends Component {
         linkClass,
         anchorAttributes,
         linkText: translatedTitle,
+        active: this.isCurrent(linkHref),
       });
 
       return result;
@@ -66,6 +101,7 @@ export default class CustomHeaderLinks extends Component {
               link.locale
               link.linkClass
               link.hideOnScroll
+              (if link.active "headerLink--active")
             }}
           >
             <a

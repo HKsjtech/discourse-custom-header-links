@@ -30,8 +30,17 @@
 
     a {
       padding: 0.35em 0.6em;
-      color: var(--header_primary);
+      color: #333;
       font-size: var(--font-up-1);
+      transition: color 0.15s ease;
+
+      &:hover {
+        color: #ff6a13;
+      }
+    }
+
+    &.headerLink--active a {
+      color: #ff6a13;
     }
   }
 
@@ -45,6 +54,97 @@
 .desktop-view .headerLink--vmo,
 .mobile-view .headerLink--vdo {
   display: none;
+}
+
+.d-header-icons > .header-sidebar-toggle {
+  display: inline-flex;
+  align-items: center;
+}
+
+@mixin header-mobile-layout {
+  header.d-header {
+    height: auto;
+  }
+
+  header.d-header > .wrap,
+  header.d-header > .wrap > .contents {
+    height: auto;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  header.d-header > .wrap > .contents {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "logo actions"
+      "nav nav";
+    align-items: center;
+    column-gap: 0.5em;
+  }
+
+  header.d-header .title {
+    grid-area: logo;
+    min-width: 0;
+  }
+
+  header.d-header .panel,
+  header.d-header > .wrap > .contents > .header-sidebar-toggle {
+    grid-area: actions;
+  }
+
+  header.d-header .panel {
+    margin-left: 0;
+  }
+
+  header.d-header .header-buttons {
+    margin-top: 0;
+  }
+
+  header.d-header .before-header-panel-outlet {
+    grid-area: nav;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding-bottom: 0.85em;
+    overflow: hidden;
+  }
+
+  header.d-header .custom-header-links {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .headerLink {
+      flex: 0 0 auto;
+
+      a {
+        white-space: nowrap;
+        font-size: var(--font-0);
+        padding: 0.55em 0.55em 0.7em;
+      }
+    }
+  }
+}
+
+.mobile-view {
+  @include header-mobile-layout;
+}
+
+@media (max-width: 1100px) {
+  @include header-mobile-layout;
 }
 
 // for compatibility with the discourse-header-search component
@@ -64,4 +164,17 @@
   .search-menu {
     width: 100% !important; // overrides very specific selector
   }
+}
+
+html,
+body,
+.background-container {
+  background: #ffffff;
+  background-color: #ffffff;
+}
+
+#main-outlet {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
 }

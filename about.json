@@ -1,6 +1,9 @@
 {
   "name": "Custom Header Links",
   "component": true,
+  "assets": {
+    "icons-sprite": "/assets/icons-sprite.svg"
+  },
   "about_url": "https://meta.discourse.org/t/custom-header-links/90588",
   "license_url": "https://github.com/discourse/discourse-custom-header-links/blob/main/LICENSE"
 }

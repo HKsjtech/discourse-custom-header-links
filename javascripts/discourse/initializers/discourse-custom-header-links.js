@@ -56,21 +56,17 @@ function placeLoginIcon() {
     return;
   }
 
-  const use = svg.querySelector("use");
-  if (use) {
-    if (use.getAttribute("href") === "#header-login") {
-      return;
-    }
-    use.setAttribute("href", "#header-login");
-    use.setAttribute("xlink:href", "#header-login");
-    return;
-  }
-
-  if (svg.querySelector("path")?.getAttribute("d") === LOGIN_PATH) {
-    return;
-  }
-
   svg.setAttribute("viewBox", "0 0 20 20");
+  svg.setAttribute("width", "20");
+  svg.setAttribute("height", "20");
+
+  if (
+    !svg.querySelector("use") &&
+    svg.querySelector("path")?.getAttribute("d") === LOGIN_PATH
+  ) {
+    return;
+  }
+
   svg.innerHTML = `<path fill="currentColor" d="${LOGIN_PATH}"></path>`;
 }
 

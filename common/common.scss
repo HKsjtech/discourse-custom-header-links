@@ -22,7 +22,8 @@
   display: flex;
   flex: 1 1 auto;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: 48px;
   width: 100%;
   min-width: 0;
   margin-left: 0;
@@ -34,10 +35,11 @@
   }
 
   .headerLink {
+    flex: 0 0 auto;
     list-style: none;
 
     a {
-      padding: 0.35em 0.6em;
+      padding: 0.35em 0;
       color: #000;
       font-size: 14px;
       font-weight: bold;
@@ -89,7 +91,7 @@
   height: 20px;
   min-width: 0;
   margin: 0;
-  padding: 0;
+  padding: 0.5em;
   line-height: 1;
   color: #000;
   background: transparent;
@@ -351,6 +353,27 @@ body,
   border-radius: 0;
 }
 
-.d-header-icons{
+.d-header-icons {
   align-items: center;
+}
+
+@media screen and (min-width: 875px) {
+  header.d-header .icons .icon {
+    margin-left: 0.85em;
+  }
+}
+
+header.d-header .d-header-icons .icon {
+  padding: 0.5em;
+  margin-top: 0;
+  margin-left:0;
+}
+header.d-header #toggle-current-user{
+  margin-top: -5px;
+}
+.d-header .header-buttons .auth-buttons{
+  margin-left:1em;
+}
+header.d-header .panel {
+  padding: 0;
 }
